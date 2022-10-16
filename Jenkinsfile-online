@@ -16,6 +16,7 @@ pipeline {
         REGISTRY = 'docker.io'
         DOCKERHUB_NAMESPACE = 'yeke321'
         GITHUB_ACCOUNT = 'yeke321'
+        GITHUB_USER_EMAIL = '15751837920@163.com'
         APP_NAME = 'devops-java-sample'
         SONAR_CREDENTIAL_ID = 'sonar-token'
     }
@@ -79,8 +80,8 @@ pipeline {
               container ('maven') {
                 input(id: 'release-image-with-tag', message: 'release image with tag?')
                   withCredentials([usernamePassword(credentialsId: "$GITHUB_CREDENTIAL_ID", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh 'git config --global user.email "15751837920@163.com" '
-                    sh 'git config --global user.name "yeke321" '
+                    sh 'git config --global user.email "$GITHUB_USER_EMAIL" '
+                    sh 'git config --global user.name "$GITHUB_ACCOUNT" '
                     sh 'git tag -a $TAG_NAME -m "$TAG_NAME" '
                     sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GITHUB_ACCOUNT/devops-java-sample.git --tags --ipv4'
                   }
